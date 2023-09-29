@@ -12,6 +12,7 @@ import uvicorn
 import joblib
 import pandas as pd
 import gdown
+from modelo_de_predicción_de_precio_viviendas import CombinedAttributesAdder
 
 model_url = "https://drive.google.com/uc?id=19h5i1e8Fw0IrHLEeiB4C_SrBtcBXLQZ9"
 pipeline_url = "https://drive.google.com/uc?id=19LUtYskR5xCRYKyxks7Y308y1_9dZqLG"
@@ -25,6 +26,8 @@ model = joblib.load("my_model.pkl")
 pipeline = joblib.load("my_pipeline.pkl")
 
 app = FastAPI()
+
+attr_adder = CombinedAttributesAdder(add_bedrooms_per_room=False)# Creo una instancia de CombinedAttributesAdder
 
 @app.post("/predict/")
 async def predict(data: dict):
