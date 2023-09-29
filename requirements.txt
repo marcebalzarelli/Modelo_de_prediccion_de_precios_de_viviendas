@@ -6,3 +6,4 @@ pydantic
 requests
 gdown
 scikit-learn
+matplotlib
