@@ -35,6 +35,9 @@ Se realizó una optimización de hiperparámetros utilizando GridSearchCV para e
 
 El modelo final se evaluó utilizando datos de prueba no vistos para obtener una estimación más realista del rendimiento. El error cuadrático medio obtenido en los datos de prueba fue de aproximadamente 48,230.85, lo que indica que el modelo tiene un buen rendimiento para predecir los precios de viviendas en nuevos datos.
 
+## Despliegue en Render
+El modelo de Predicción de Precios de Viviendas se ha desplegado en la plataforma Render para facilitar su acceso y uso. Los usuarios pueden utilizar la API creada para realizar predicciones de precios de viviendas de manera conveniente y eficiente. El despliegue en Render garantiza la disponibilidad constante del modelo.
+
 ## Uso de la API
 
 El modelo entrenado y el preprocesamiento de datos se guardaron en archivos "my_model.pkl" y "my_pipeline.pkl", respectivamente. Estos archivos se pueden utilizar para cargar el modelo y el pipeline en la API y realizar predicciones en tiempo real.
