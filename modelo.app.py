@@ -6,22 +6,43 @@ import folium
 import plotly.express as px
 import matplotlib.pyplot as plt
 import geopandas as gpd
+import zipfile
+import requests
+import os
 
-model_url = "https://drive.google.com/uc?id=19h5i1e8Fw0IrHLEeiB4C_SrBtcBXLQZ9"
-pipeline_url = "https://drive.google.com/uc?id=19LUtYskR5xCRYKyxks7Y308y1_9dZqLG"
+# URLs de los archivos en GitHub
+zip_model_url = "https://github.com/marcebalzarelli/Modelo_de_prediccion_de_precios_de_viviendas/raw/main/my_model.zip"
+pkl_model_url = "https://github.com/marcebalzarelli/Modelo_de_prediccion_de_precios_de_viviendas/raw/main/my_pipeline.pkl"
 
 @st.cache
-def cargar_modelo_y_pipeline(model_url, pipeline_url):
+def cargar_modelos():
+    # Descargo y descomprimo el modelo ZIP
+    st.write("Descargando y descomprimiendo el modelo ZIP...")
+    zip_model_dir = "zip_model"  # Carpeta donde se extraerá el modelo ZIP
+    os.makedirs(zip_model_dir, exist_ok=True)
     
-    gdown.download(model_url, "my_model.pkl", quiet=False)# Descargo el modelo y el pipeline desde las URL
-    gdown.download(pipeline_url, "my_pipeline.pkl", quiet=False)
+    zip_model_path = os.path.join(zip_model_dir, "my_model.zip")
+    response = requests.get(zip_model_url)
+    with open(zip_model_path, "wb") as zip_file:
+        zip_file.write(response.content)
     
-    model = joblib.load("my_model.pkl")# Cargo el modelo y el pipeline
-    pipeline = joblib.load("my_pipeline.pkl")
+    with zipfile.ZipFile(zip_model_path, "r") as zip_ref:
+        zip_ref.extractall(zip_model_dir)
     
-    return model, pipeline
+    st.write("Descargando y cargando el modelo PKL...")# Cargo el modelo PKL
+    pkl_model_path = "my_model.pkl"
+    response = requests.get(pkl_model_url)
+    with open(pkl_model_path, "wb") as pkl_file:
+        pkl_file.write(response.content)
+    
+    # Cargo ambos modelos
+    loaded_zip_model = joblib.load(os.path.join(zip_model_dir, "my_model.pkl"))
+    loaded_pkl_model = joblib.load("my_model.pkl")
+    
+    return loaded_zip_model, loaded_pkl_model
 
-model, pipeline = cargar_modelo_y_pipeline(model_url, pipeline_url)# Llamo a la función para cargar el modelo y el pipeline
+zip_model, pkl_model = cargar_modelos()# Llamo a la función para cargar los modelos
+
 
 def predict(data):# Creo la función para predecir
     try:
