@@ -17,7 +17,6 @@ pkl_model_url = "https://github.com/marcebalzarelli/Modelo_de_prediccion_de_prec
 @st.cache
 def cargar_modelos():
     # Descargo y descomprimo el modelo ZIP
-    st.write("Descargando y descomprimiendo el modelo ZIP...")
     zip_model_dir = "zip_model"  # Carpeta donde se extraerá el modelo ZIP
     os.makedirs(zip_model_dir, exist_ok=True)
     
@@ -29,7 +28,6 @@ def cargar_modelos():
     with zipfile.ZipFile(zip_model_path, "r") as zip_ref:
         zip_ref.extractall(zip_model_dir)
     
-    st.write("Descargando y cargando el modelo PKL...")# Cargo el modelo PKL
     pkl_model_path = "my_model.pkl"
     response = requests.get(pkl_model_url)
     with open(pkl_model_path, "wb") as pkl_file:
