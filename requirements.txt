@@ -1,9 +1,11 @@
-﻿fastapi
 joblib
 pandas
-uvicorn
-pydantic
 requests
 gdown
 scikit-learn
 matplotlib
+streamlit
+plotly
+geopandas
+folium
+
