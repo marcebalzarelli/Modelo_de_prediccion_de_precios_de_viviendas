@@ -82,8 +82,13 @@ plt.show()
 
 """Se busca correlaciones entre los diferentes atributos."""
 
-corr_matrix = data.corr()
-corr_matrix['median_house_value'].sort_values(ascending=False)
+data_without_column = data.drop(['ocean_proximity'], axis=1).copy()
+
+corr_matrix = data_without_column.corr()
+
+# Ordeno las correlaciones con respecto a 'median_house_value'
+corr_sorted = corr_matrix['median_house_value'].sort_values(ascending=False)
+print(corr_sorted)
 
 """Se puede ver, que la variable más correlacionada con el valor de una casa es el ingreso medio de la población, mientras que aspectos como el número de habitaciones o la población de la zona no son tan importantes."""
 
