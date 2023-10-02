@@ -13,8 +13,12 @@ pipeline_url = "https://drive.google.com/uc?id=19LUtYskR5xCRYKyxks7Y308y1_9dZqLG
 @st.cache
 def cargar_modelo_y_pipeline(model_url, pipeline_url):
     
-    model = joblib.load(model_url)# Descargo el modelo y el pipeline
-    pipeline = joblib.load(pipeline_url)
+    gdown.download(model_url, "my_model.pkl", quiet=False)# Descargo el modelo y el pipeline desde las URL
+    gdown.download(pipeline_url, "my_pipeline.pkl", quiet=False)
+    
+    model = joblib.load("my_model.pkl")# Cargo el modelo y el pipeline
+    pipeline = joblib.load("my_pipeline.pkl")
+    
     return model, pipeline
 
 model, pipeline = cargar_modelo_y_pipeline(model_url, pipeline_url)# Llamo a la función para cargar el modelo y el pipeline
