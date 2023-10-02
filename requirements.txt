@@ -8,5 +8,4 @@ streamlit
 plotly
 geopandas
 folium
-zipfile
 os
